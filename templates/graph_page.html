@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Frequency Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Canvas for word frequency chart -->
+    <canvas id="wordFrequencyChart" width="400" height="300"></canvas>
+
+    <script>
+        // Function to update word frequency chart
+        function updateWordFrequencyChart(topWords) {
+            var ctx = document.getElementById('wordFrequencyChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(topWords),
+                    datasets: [{
+                        label: 'Word Frequency',
+                        data: Object.values(topWords),
+                        backgroundColor: 'rgba(92, 240, 195, 0.7)',
+                        borderColor: 'rgba(92, 240, 195, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Function to generate the graph when the page loads
+        window.onload = function () {
+            // Assuming you have a variable 'topWords' containing word frequencies
+            var topWords = {{ top_words | tojson }};
+            updateWordFrequencyChart(topWords);
+        }
+    </script>
+</body>
+</html>
